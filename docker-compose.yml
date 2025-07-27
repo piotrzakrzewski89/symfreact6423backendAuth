@@ -1,0 +1,55 @@
+services:
+    php:
+        build:
+            context: ./docker/php
+            args:
+                TIMEZONE: Europe/Warsaw
+        container_name: auth_php
+        volumes:
+            - ./:/app
+            - './docker/php/conf.d:/usr/local/etc/php/conf.d'
+            - 'php_composer_data:/root/.composer'
+        networks:
+            - network_auth
+            - network_rabbit
+    auth-www:
+        build: ./docker/www
+        container_name: auth-www
+        ports:
+            - 8081:8081
+        volumes:
+            - ./:/app
+            - ./docker/www/conf.d:/etc/nginx/conf.d
+        networks:
+            - network_auth
+
+    auth-db:
+        image: postgres:latest
+        container_name: auth-db
+        volumes:
+            - auth_db_data:/var/lib/postgresql/data-auth
+        ports:
+            - 5433:5432
+        environment:
+            POSTGRES_USER: auth
+            POSTGRES_PASSWORD: auth
+            TZ: Europe/Warsaw
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U auth"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        networks:
+            - network_auth
+
+volumes:
+    auth_db_data:
+    php_composer_data:
+
+networks:
+  network_auth:
+    name: network_auth
+    driver: bridge
+  network_rabbit:
+    external: true
+    name: network_rabbit
