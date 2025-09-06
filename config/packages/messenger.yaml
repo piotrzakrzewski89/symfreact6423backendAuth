@@ -1,0 +1,20 @@
+framework:
+    # messenger:
+    #     default_bus: messenger.bus.default
+    #     transports:
+    #         user:
+    #             dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
+    #             options:
+    #                 exchange:
+    #                     name: user
+    #                     type: direct
+    #                 queues:
+    #                     send_user_event: ~
+    #         doctrine_log:
+    #             dsn: "doctrine://default"
+    #             options:
+    #                 table_name: messenger_messages
+    #     routing:
+    #         'App\Application\Message\UserMessage':
+    #             - user
+    #             - doctrine_log

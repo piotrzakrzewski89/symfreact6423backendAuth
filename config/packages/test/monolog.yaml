@@ -1,0 +1,37 @@
+monolog:
+    handlers:
+        main:
+            type: stream
+            path: '%kernel.logs_dir%/test_app.log'
+            level: debug
+            channels: ['!event', '!doctrine']
+
+        doctrine:
+            type: stream
+            path: '%kernel.logs_dir%/test_doctrine.log'
+            level: debug
+            channels: ['doctrine']
+
+        stdout:
+            type: stream
+            path: '%kernel.logs_dir%/test_stdout.log'
+            level: info
+            channels: ['console']
+
+        stderr:
+            type: stream
+            path: '%kernel.logs_dir%/test_stderr.log'
+            level: error
+            channels: ['console']
+
+        event:
+            type: stream
+            path: '%kernel.logs_dir%/test_event.log'
+            level: info
+            channels: ['event']
+
+        security:
+            type: stream
+            path: '%kernel.logs_dir%/test_security.log'
+            level: info
+            channels: ['security']

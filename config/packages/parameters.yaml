@@ -1,0 +1,4 @@
+parameters:
+    app.timezone: '%env(APP_TIMEZONE)%'
+    api_user_url: '%env(API_USER_URL)%'
+    api_company_url: '%env(API_COMPANY_URL)%'
